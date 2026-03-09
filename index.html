@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Pixel Inspector</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="upload-section" id="uploadSection">
+            <div class="upload-area" id="uploadArea">
+                <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+                <p class="upload-text">画像をドラッグ&ドロップ</p>
+                <p class="upload-text-or">または</p>
+                <button class="upload-button" id="uploadButton">ファイルを選択</button>
+                <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            </div>
+        </div>
+
+        <div class="viewer-section" id="viewerSection" style="display: none;">
+            <div class="info-panel">
+                <div class="info-item">
+                    <span class="info-label">座標 (px):</span>
+                    <span class="info-value" id="pixelCoords">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">座標 (%):</span>
+                    <span class="info-value" id="percentCoords">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">画像サイズ:</span>
+                    <span class="info-value" id="imageSize">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">ズーム:</span>
+                    <span class="info-value" id="zoomLevel">100%</span>
+                </div>
+                <button class="reset-button" id="resetButton">画像をリセット</button>
+            </div>
+
+            <div class="canvas-container" id="canvasContainer">
+                <canvas id="imageCanvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
