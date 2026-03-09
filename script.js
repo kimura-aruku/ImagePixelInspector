@@ -220,20 +220,20 @@ document.addEventListener('mousemove', (e) => {
 
                 // Show color preview
                 colorPreview.style.background = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
-                colorPreview.style.display = 'inline-block';
+                colorPreview.style.visibility = 'visible';
             } else {
                 pixelCoords.textContent = '-';
                 percentCoords.textContent = '-';
                 rgbColor.textContent = '-';
                 hexColor.textContent = '-';
-                colorPreview.style.display = 'none';
+                colorPreview.style.visibility = 'hidden';
             }
         } else {
             pixelCoords.textContent = '-';
             percentCoords.textContent = '-';
             rgbColor.textContent = '-';
             hexColor.textContent = '-';
-            colorPreview.style.display = 'none';
+            colorPreview.style.visibility = 'hidden';
         }
     }
 });
@@ -264,7 +264,7 @@ resetButton.addEventListener('click', () => {
     zoomLevel.textContent = '100%';
     rgbColor.textContent = '-';
     hexColor.textContent = '-';
-    colorPreview.style.display = 'none';
+    colorPreview.style.visibility = 'hidden';
 });
 
 // Handle window resize
