@@ -22,32 +22,38 @@
 
         <div class="viewer-section" id="viewerSection" style="display: none;">
             <div class="info-panel">
-                <div class="info-item">
-                    <span class="info-label">座標 (px):</span>
-                    <span class="info-value" id="pixelCoords">-</span>
+                <div class="info-group">
+                    <div class="info-row">
+                        <span class="info-label">座標 (px):</span>
+                        <span class="info-value" id="pixelCoords">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">座標 (%):</span>
+                        <span class="info-value" id="percentCoords">-</span>
+                    </div>
                 </div>
-                <div class="info-item">
-                    <span class="info-label">座標 (%):</span>
-                    <span class="info-value" id="percentCoords">-</span>
+                <div class="info-group">
+                    <div class="info-row">
+                        <span class="info-label">RGB:</span>
+                        <span class="info-value" id="rgbColor">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">色コード:</span>
+                        <span class="info-value" id="hexColor">-</span>
+                        <span class="color-preview" id="colorPreview"></span>
+                    </div>
                 </div>
-                <div class="info-item">
-                    <span class="info-label">画像サイズ:</span>
-                    <span class="info-value" id="imageSize">-</span>
+                <div class="info-group">
+                    <div class="info-row">
+                        <span class="info-label">画像サイズ:</span>
+                        <span class="info-value" id="imageSize">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">ズーム:</span>
+                        <span class="info-value" id="zoomLevel">100%</span>
+                    </div>
                 </div>
-                <div class="info-item">
-                    <span class="info-label">ズーム:</span>
-                    <span class="info-value" id="zoomLevel">100%</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">RGB:</span>
-                    <span class="info-value" id="rgbColor">-</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">色コード:</span>
-                    <span class="info-value" id="hexColor">-</span>
-                    <span class="color-preview" id="colorPreview"></span>
-                </div>
-                <button class="reset-button" id="resetButton">画像をリセット</button>
+                <button class="reset-button" id="resetButton">リセット</button>
             </div>
 
             <div class="canvas-container" id="canvasContainer">

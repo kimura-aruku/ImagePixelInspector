@@ -90,58 +90,56 @@ body {
     display: flex;
     flex-direction: column;
     background: white;
-    margin: 20px;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     overflow: hidden;
 }
 
 .info-panel {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 20px;
+    padding: 15px 20px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    gap: 40px;
     align-items: center;
-    min-height: 80px;
-    height: 80px;
+    justify-content: center;
+    min-height: 60px;
+    height: 60px;
     flex-shrink: 0;
 }
 
-.info-item {
+.info-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 200px;
+}
+
+.info-row {
     display: flex;
     align-items: center;
-    gap: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 8px 15px;
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
+    gap: 8px;
     white-space: nowrap;
 }
 
 .info-label {
-    font-size: 14px;
-    font-weight: 600;
-    opacity: 0.9;
+    font-size: 11px;
+    font-weight: 500;
+    opacity: 0.85;
 }
 
 .info-value {
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 600;
     font-family: 'Courier New', monospace;
-    min-width: 200px;
-    display: inline-block;
 }
 
 .color-preview {
-    width: 30px;
-    height: 30px;
-    border-radius: 5px;
-    border: 2px solid white;
-    margin-left: 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    border: 1px solid white;
+    margin-left: 6px;
     display: none;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .reset-button {
@@ -149,9 +147,9 @@ body {
     background: rgba(255, 255, 255, 0.2);
     color: white;
     border: 2px solid white;
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-size: 14px;
+    padding: 6px 16px;
+    border-radius: 15px;
+    font-size: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: 600;
