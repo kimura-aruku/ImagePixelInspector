@@ -98,7 +98,7 @@ body {
     color: white;
     padding: 15px 20px;
     display: grid;
-    grid-template-columns: 240px 270px 220px auto;
+    grid-template-columns: 240px 270px 220px auto 90px;
     gap: 15px;
     align-items: start;
     flex-shrink: 0;
@@ -166,8 +166,20 @@ body {
     vertical-align: middle;
 }
 
+.grid-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.grid-toggle input[type="checkbox"] {
+    cursor: pointer;
+}
+
 .reset-button {
-    margin-left: auto;
     background: rgba(255, 255, 255, 0.2);
     color: white;
     border: 2px solid white;
@@ -177,6 +189,9 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: 600;
+    width: auto;
+    white-space: nowrap;
+    align-self: center;
 }
 
 .reset-button:hover {
@@ -203,11 +218,17 @@ body {
     cursor: grabbing;
 }
 
-#imageCanvas {
+#imageCanvas,
+#gridCanvas {
     position: absolute;
     top: 50%;
     left: 50%;
     transform-origin: center center;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
+    pointer-events: none;
+}
+
+#gridCanvas {
+    display: none;
 }

@@ -6,6 +6,7 @@ const uploadButton = document.getElementById('uploadButton');
 const fileInput = document.getElementById('fileInput');
 const resetButton = document.getElementById('resetButton');
 const canvas = document.getElementById('imageCanvas');
+const gridCanvas = document.getElementById('gridCanvas');
 const canvasContainer = document.getElementById('canvasContainer');
 const pixelCoords = document.getElementById('pixelCoords');
 const percentCoords = document.getElementById('percentCoords');
@@ -14,8 +15,10 @@ const zoomLevel = document.getElementById('zoomLevel');
 const rgbColor = document.getElementById('rgbColor');
 const hexColor = document.getElementById('hexColor');
 const colorPreview = document.getElementById('colorPreview');
+const gridCheckbox = document.getElementById('gridCheckbox');
 
 const ctx = canvas.getContext('2d', { willReadFrequently: true });
+const gridCtx = gridCanvas.getContext('2d');
 
 // State
 let currentImage = null;
@@ -25,6 +28,7 @@ let offsetY = 0;
 let isPanning = false;
 let startPanX = 0;
 let startPanY = 0;
+let showGrid = false;
 
 // Upload functionality
 uploadButton.addEventListener('click', () => {
@@ -79,6 +83,9 @@ function loadImage(file) {
             // Update info
             imageSize.textContent = `${img.width} × ${img.height}px`;
 
+            // Generate grid once
+            generateGrid();
+
             // Render
             render();
         };
@@ -86,6 +93,41 @@ function loadImage(file) {
     };
 
     reader.readAsDataURL(file);
+}
+
+// Generate grid (called once when image is loaded)
+function generateGrid() {
+    if (!currentImage) return;
+
+    const borderWidth = 2;
+    const padding = borderWidth;
+
+    // Resize grid canvas to match image canvas
+    gridCanvas.width = currentImage.width + padding * 2;
+    gridCanvas.height = currentImage.height + padding * 2;
+
+    gridCtx.clearRect(0, 0, gridCanvas.width, gridCanvas.height);
+    gridCtx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
+    gridCtx.lineWidth = 1;
+
+    // Vertical lines
+    for (let x = 0; x <= currentImage.width; x++) {
+        gridCtx.beginPath();
+        gridCtx.moveTo(x + padding + 0.5, padding);
+        gridCtx.lineTo(x + padding + 0.5, currentImage.height + padding);
+        gridCtx.stroke();
+    }
+
+    // Horizontal lines
+    for (let y = 0; y <= currentImage.height; y++) {
+        gridCtx.beginPath();
+        gridCtx.moveTo(padding, y + padding + 0.5);
+        gridCtx.lineTo(currentImage.width + padding, y + padding + 0.5);
+        gridCtx.stroke();
+    }
+
+    // Update grid canvas transform to match image canvas
+    gridCanvas.style.transform = canvas.style.transform;
 }
 
 // Render canvas
@@ -122,7 +164,9 @@ function render() {
     const centerX = canvasContainer.clientWidth / 2;
     const centerY = canvasContainer.clientHeight / 2;
 
-    canvas.style.transform = `translate(-50%, -50%) translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+    const transform = `translate(-50%, -50%) translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+    canvas.style.transform = transform;
+    gridCanvas.style.transform = transform;
 
     // Update zoom display
     zoomLevel.textContent = `${Math.round(scale * 100)}%`;
@@ -265,6 +309,14 @@ resetButton.addEventListener('click', () => {
     rgbColor.textContent = '-';
     hexColor.textContent = '-';
     colorPreview.style.visibility = 'hidden';
+    gridCanvas.style.display = 'none';
+    gridCheckbox.checked = false;
+});
+
+// Grid toggle
+gridCheckbox.addEventListener('change', (e) => {
+    showGrid = e.target.checked;
+    gridCanvas.style.display = showGrid ? 'block' : 'none';
 });
 
 // Handle window resize
