@@ -11,8 +11,11 @@ const pixelCoords = document.getElementById('pixelCoords');
 const percentCoords = document.getElementById('percentCoords');
 const imageSize = document.getElementById('imageSize');
 const zoomLevel = document.getElementById('zoomLevel');
+const rgbColor = document.getElementById('rgbColor');
+const hexColor = document.getElementById('hexColor');
+const colorPreview = document.getElementById('colorPreview');
 
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
 // State
 let currentImage = null;
@@ -199,13 +202,38 @@ document.addEventListener('mousemove', (e) => {
 
                 pixelCoords.textContent = `X: ${x}, Y: ${y}`;
                 percentCoords.textContent = `X: ${percentX}%, Y: ${percentY}%`;
+
+                // Get pixel color
+                const imageData = ctx.getImageData(x + borderWidth, y + borderWidth, 1, 1);
+                const pixel = imageData.data;
+                const r = pixel[0];
+                const g = pixel[1];
+                const b = pixel[2];
+                const a = pixel[3];
+
+                // Display RGB
+                rgbColor.textContent = `R:${r}, G:${g}, B:${b}, A:${a}`;
+
+                // Convert to hex
+                const hex = '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('').toUpperCase();
+                hexColor.textContent = hex;
+
+                // Show color preview
+                colorPreview.style.background = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
+                colorPreview.style.display = 'inline-block';
             } else {
                 pixelCoords.textContent = '-';
                 percentCoords.textContent = '-';
+                rgbColor.textContent = '-';
+                hexColor.textContent = '-';
+                colorPreview.style.display = 'none';
             }
         } else {
             pixelCoords.textContent = '-';
             percentCoords.textContent = '-';
+            rgbColor.textContent = '-';
+            hexColor.textContent = '-';
+            colorPreview.style.display = 'none';
         }
     }
 });
@@ -234,6 +262,9 @@ resetButton.addEventListener('click', () => {
     percentCoords.textContent = '-';
     imageSize.textContent = '-';
     zoomLevel.textContent = '100%';
+    rgbColor.textContent = '-';
+    hexColor.textContent = '-';
+    colorPreview.style.display = 'none';
 });
 
 // Handle window resize
