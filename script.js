@@ -63,8 +63,6 @@ function loadImage(file) {
         const img = new Image();
         img.onload = () => {
             currentImage = img;
-            canvas.width = img.width;
-            canvas.height = img.height;
 
             // Reset view
             scale = 1;
@@ -91,8 +89,31 @@ function loadImage(file) {
 function render() {
     if (!currentImage) return;
 
+    // Border width (complete outside of image)
+    const borderWidth = 2;
+    const padding = borderWidth;
+
+    // Resize canvas to include border completely outside the image
+    canvas.width = currentImage.width + padding * 2;
+    canvas.height = currentImage.height + padding * 2;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(currentImage, 0, 0);
+
+    // Draw image with offset for border
+    ctx.drawImage(currentImage, padding, padding);
+
+    // Draw border completely outside the image pixels
+    // The border goes from -borderWidth to 0 on the outside edge
+    ctx.strokeStyle = '#ff0000';
+    ctx.lineWidth = borderWidth;
+    // Stroke is centered on the path, so we offset by half the border width
+    // to make it completely outside
+    ctx.strokeRect(
+        padding - borderWidth / 2,
+        padding - borderWidth / 2,
+        currentImage.width + borderWidth,
+        currentImage.height + borderWidth
+    );
 
     // Update canvas transform
     const centerX = canvasContainer.clientWidth / 2;
@@ -165,15 +186,16 @@ document.addEventListener('mousemove', (e) => {
             const centerX = canvasContainer.clientWidth / 2;
             const centerY = canvasContainer.clientHeight / 2;
 
-            const canvasX = (mouseX - centerX - offsetX) / scale + canvas.width / 2;
-            const canvasY = (mouseY - centerY - offsetY) / scale + canvas.height / 2;
+            const borderWidth = 2;
+            const canvasX = (mouseX - centerX - offsetX) / scale + canvas.width / 2 - borderWidth;
+            const canvasY = (mouseY - centerY - offsetY) / scale + canvas.height / 2 - borderWidth;
 
             // Check if within image bounds
-            if (canvasX >= 0 && canvasX < canvas.width && canvasY >= 0 && canvasY < canvas.height) {
+            if (canvasX >= 0 && canvasX < currentImage.width && canvasY >= 0 && canvasY < currentImage.height) {
                 const x = Math.floor(canvasX);
                 const y = Math.floor(canvasY);
-                const percentX = ((canvasX / canvas.width) * 100).toFixed(2);
-                const percentY = ((canvasY / canvas.height) * 100).toFixed(2);
+                const percentX = ((canvasX / currentImage.width) * 100).toFixed(2);
+                const percentY = ((canvasY / currentImage.height) * 100).toFixed(2);
 
                 pixelCoords.textContent = `X: ${x}, Y: ${y}`;
                 percentCoords.textContent = `X: ${percentX}%, Y: ${percentY}%`;
