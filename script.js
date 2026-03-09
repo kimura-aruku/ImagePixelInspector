@@ -20,6 +20,10 @@ const gridCheckbox = document.getElementById('gridCheckbox');
 const ctx = canvas.getContext('2d', { willReadFrequently: true });
 const gridCtx = gridCanvas.getContext('2d');
 
+// Disable image smoothing for crisp rendering
+ctx.imageSmoothingEnabled = false;
+gridCtx.imageSmoothingEnabled = false;
+
 // State
 let currentImage = null;
 let scale = 1;
@@ -110,21 +114,21 @@ function generateGrid() {
     gridCtx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
     gridCtx.lineWidth = 1;
 
-    // Vertical lines
-    for (let x = 0; x <= currentImage.width; x++) {
-        gridCtx.beginPath();
+    gridCtx.beginPath();
+
+    // Vertical lines every 10 pixels (excluding borders at 0 and width)
+    for (let x = 10; x < currentImage.width; x += 10) {
         gridCtx.moveTo(x + padding + 0.5, padding);
         gridCtx.lineTo(x + padding + 0.5, currentImage.height + padding);
-        gridCtx.stroke();
     }
 
-    // Horizontal lines
-    for (let y = 0; y <= currentImage.height; y++) {
-        gridCtx.beginPath();
+    // Horizontal lines every 10 pixels (excluding borders at 0 and height)
+    for (let y = 10; y < currentImage.height; y += 10) {
         gridCtx.moveTo(padding, y + padding + 0.5);
         gridCtx.lineTo(currentImage.width + padding, y + padding + 0.5);
-        gridCtx.stroke();
     }
+
+    gridCtx.stroke();
 
     // Update grid canvas transform to match image canvas
     gridCanvas.style.transform = canvas.style.transform;
