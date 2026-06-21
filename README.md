@@ -49,3 +49,9 @@ HTML5 CanvasとFile APIに対応した、一般的なデスクトップ向けWeb
 ## プライバシー
 
 読み込んだ画像は利用中のブラウザ内でのみ処理されます。本ツールは画像や色情報をネットワークへ送信しません。
+
+## ライセンス
+
+本プロジェクトは [MIT License](LICENSE) のもとで公開されています。
+
+アップロードアイコンには、MIT Licenseで提供されている Heroicons v1 の `cloud-upload` アイコンを使用しています。詳細は [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) を参照してください。
